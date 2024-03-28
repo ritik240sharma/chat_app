@@ -6,13 +6,13 @@ import router2 from "./routes/message_route.js";
 import cookieParser from "cookie-parser";
 import users_route from "./routes/users_route.js";
 import cors from "cors"
+import { app, server } from "./socket/socket.js";
 const option={
     origin:"http://localhost:3000",
     method:"POST,GET,PUSH,HEAD,PATCH",
     Credential:true
 }
 
-const app=express();
 app.use(cookieParser());
 app.use(cors(option))
 app.use(express.json())
@@ -27,7 +27,7 @@ const port=process.env.REACT_APP_PORT||4000;
 
 if(connection())
 {
-    app.listen(port,()=>{
+    server.listen(port,()=>{
     console.log(`server connected http://localhost:${port}`)
     })
 }

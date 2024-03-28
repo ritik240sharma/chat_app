@@ -3,6 +3,7 @@ import { IoIosSend as Send } from "react-icons/io";
 import useConversation from "../../zustand/useConversation";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../../context/Auth_context";
+import useListenMessage from "../../hooks/useListenMessage";
 
 function MessageInput() {
   const{localdata}=useAuthContext()
@@ -31,7 +32,7 @@ function MessageInput() {
 
       const data = await res.json();
       SetMessages([...messages, data]);
-      console.log(messages);
+      // console.log(messages);
     } catch (error) {
       console.log(error.body);
     }

@@ -1,7 +1,7 @@
 import { db } from "../database/db.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 async function sendmessage(req, res) {
-  // console.log(req.body);
   const senderid = req.body.senderId;
   const message = req.body.message;
   const receiverid = req.params.id;
@@ -12,9 +12,14 @@ async function sendmessage(req, res) {
       [senderid, receiverid, message]
     );
     // console.log("message sent successfully",insert_message.rows[0]);
+    const ReceiverSocketId=getReceiverSocketId(receiverid)
+    if(ReceiverSocketId){
+      // console.log(insert_message.rows[0],ReceiverSocketId)
+    io.to(ReceiverSocketId).emit("newMessage",insert_message.rows[0])
+    }
     res.status(200).json(insert_message.rows[0]);
   } catch (error) {
-    console.log("message not sent , unsuccessfull", error.message);
+    console.log("message not sent ", error.message);
     res.status(400).json({ error: "something wrong" });
   }
 }

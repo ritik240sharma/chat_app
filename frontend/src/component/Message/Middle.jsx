@@ -2,10 +2,12 @@ import  { useEffect, useRef } from 'react'
 import useGetmessages from '../../hooks/useGetmessages'
 import { useAuthContext } from '../../context/Auth_context';
 import useConversation from '../../zustand/useConversation';
+import useListenMessage from '../../hooks/useListenMessage';
 
 function Middle() {
   const{selectedConversation}=useConversation()
   const messages=useGetmessages();
+  useListenMessage()
   const {localdata}=useAuthContext()
   const senderId=localdata.id;
   const last=useRef();
