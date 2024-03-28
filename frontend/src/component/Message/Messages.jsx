@@ -4,7 +4,7 @@ import Middle from './Middle.jsx'
 import MessageInput from "./MessageInput.jsx"
 export default function Messages() {
   return (
-    <div className='bg-white'>
+    <div className='bg-white w-full flex flex-col  '>
       <Top />
       <hr/>
       <Middle />

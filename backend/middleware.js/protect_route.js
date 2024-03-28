@@ -2,7 +2,7 @@ import jwt  from "jsonwebtoken";
 import { db } from "../database/db.js";
 async function protect_route(req,res,next){
     try{
-          const token=req.cookies.jwt;
+          const token=await req.cookies.jwt
           if(!token){
             return res.status(401).json({error:"Token not found "})
           }

@@ -3,7 +3,7 @@ import protect_route from "../middleware.js/protect_route.js";
 import getSideUser from "../controller/getSideUser.js";
 
 const users_route=Router();
-users_route.get("/",protect_route,getSideUser);
+users_route.post("/", getSideUser);
 
 export default users_route
 

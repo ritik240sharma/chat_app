@@ -5,23 +5,28 @@ import generateTokenandSetcookie from "../utils/generateCookie.js";
 async function login(req, res) {
   const { username, password } = req.body;
   const search=await db.query("select * from signup where username=$1",[username])
-  if(search.rows.length==0)return res.json("invalid username")
+  if(search.rows.length==0)
+  { 
+    console.log("invalid username")
+    return res.json({error:"invalid username"})
+  }
 
   const comp=await bcrypt.compare(password,search.rows[0].password);
   if(!comp){
-    return res.json("wrong password")
+    console.log("wrong password")
+    return res.json({error:"wrong password"})
   }
   generateTokenandSetcookie(search.rows[0].id,res)
-  res.json(search.rows)
+  res.json(search.rows[0])
 }
 
 function logout(req, res) {
   try{
   res.cookie("jwt"," ",{maxAge:0})
-  res.status(200).json({message:"logged out successfully"})
+  res.json({message:"logged out successfully"})
   }catch(e){
     console.log("error in logout")
-    res.status(400).json({message:"error in logout "})
+    res.json({message:"error in logout "})
   }
 
 }
@@ -35,12 +40,11 @@ async function signup(req, res) {
     ]);
     if (password !== confirmpassword) {
       console.log("password mismatch");
-      return res.send(400, "password mismatch");
+      return res.status(400).json(400, "password mismatch");
     }
 
     if (match.rows != 0) {
-      console.log("username already exists");
-      return res.send("user already exists");
+      return res.json({error:"username already exists"});
     } else {
       try {
         var photo;
@@ -50,10 +54,10 @@ async function signup(req, res) {
         const hashedPassword = await bcrypt.hash(password, salt);
         const s = await db.query(
           "insert into signup values($1,$2,$3,$4,$5,$6) returning *",
-          [fullname, username, hashedPassword, email, "qwd", "43"]
+          [fullname, username, hashedPassword, email, gender, "43"]
         );
-        generateTokenandSetcookie(s.rows[0].id, res);
-        return res.json(s.rows);
+         generateTokenandSetcookie(s.rows[0].id, res);
+        return res.json(s.rows[0]);
       } catch (e) {
         console.log(e);
         return res.json(e.message);
@@ -66,7 +70,7 @@ async function signup(req, res) {
     );
     res.json(error.message);
   }
-  res.send("signed up successfully");
+  res.json({message:"signed up successfully"});
 }
 
 export { login, logout, signup };

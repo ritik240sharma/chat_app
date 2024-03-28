@@ -1,21 +1,24 @@
 import { db } from "../database/db.js";
+import generateTokenandSetcookie from "../utils/generateCookie.js";
 
 async function getSideUser(req,res)
 {
-  const id=req.user.rows[0].id;
+  // console.log(req.body)
+  // const id=req.user.rows[0].id;
+  const id=req.body.id; 
+  generateTokenandSetcookie(id,res)
   try
   {
-    const users=await db.query("select fullname,username,email,gender,picurl,created_at from signup where id!=$1 ",[id]) 
+    const users=await db.query("select fullname,username,email,gender,picurl,created_at,id from signup where id!=$1 ",[id]) 
     if(users)
     {
-    console.log(users.rows)
-    res.send(users.rows)
+    res.json(users.rows)
     }
   }
    catch(error)
   {
-    console.log("error in controller/getSideUser",error.message);
-    res.json("error in controller/getSideUser",error.message);
+    console.log(error);
+    res.json("error in controller/getSideUser");
   }
 }
 

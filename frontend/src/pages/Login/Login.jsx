@@ -1,5 +1,33 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { NavLink } from "react-router-dom"
+import { useAuthContext } from "../../context/Auth_context";
+const initial={username:"",password:""}
 function Login(){
-    
+	const[user,Setuser]=useState(initial)
+	const {Setlocaldata} =useAuthContext()
+     async function HandleChange(e)
+	{
+		e.preventDefault();
+       const response=await fetch("http://localhost:4000/api/auth/login",{
+		 method:"POST",
+		 headers: {
+			"Content-Type": "application/json",
+		  },
+		  body:JSON.stringify(user)
+	   })
+	   const data=await response.json();
+	   if(data.error)
+	   {
+		toast.error(data.error)
+	   }
+	   else{
+		localStorage.setItem("chat-user",JSON.stringify(data))
+		Setlocaldata(data)
+		Setuser(initial)
+	   }
+	}
+	
     return<>
         <div className='flex flex-col items-center justify-center  '>
  			<div className='w-[400px] p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
@@ -7,27 +35,30 @@ function Login(){
  					Login
  					<span className='text-cyan-400'> ChatApp</span>
  				</h1>
- 				<form>
+ 				<form  onSubmit={(e)=>HandleChange(e)}>
  					<div>
  						<label className='label p-2'>
  							<h1 className='text-base label-text'>Username</h1>
  						</label>
- 						<input type='text' placeholder='Enter username' className='w-full active:outline-cyan-400 input input-bordered h-10' />
+ 						<input name="username" type='text' onChange={(e)=>Setuser({...user,username:e.target.value})} value={user.username} placeholder='Enter username' className='w-full active:outline-cyan-400 input input-bordered h-10' />
  					</div>
  					<div>
  						<label className='label'>
  							<span className='text-base label-text'>Password</span>
  						</label>
  						<input
+						    name="password"
  							type='password'
+							 onChange={(e)=>Setuser({...user,password:e.target.value})}
+							value={user.password}
  							placeholder='Enter Password'
  							className='w-full p-3 focus:outline-none active:outline-cyan-400 border rounded-md h-10'
  						/>
  					</div>
                     
- 					<a href='#' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
+ 					<NavLink to='/signup'className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
  						{"Don't"} have an account?
- 					</a>
+ 					</NavLink>
  					<div>
  						<button className='w-full rounded-md p-1 mt-2 active:bg-black active:text-white  bg-cyan-400 '>Login</button>
  					</div>
