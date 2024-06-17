@@ -30,17 +30,14 @@ app.use("/api/group",group_route)
 const __dirname=path.resolve();
 app.use(express.static(path.join(__dirname,"/frontend/dist")))
 const port=process.env.PORT;
-<<<<<<< HEAD
 
 app.get("*",(req,res)=>{
     res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
 })
 
-=======
 app.get("*",(req,res)=>{
     res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
 })
->>>>>>> 97b235536e2a003dd9a1281dc6617f57dee26353
 if(connection())
 {
     server.listen(port,()=>{
