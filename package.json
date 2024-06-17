@@ -1,0 +1,30 @@
+{
+  "type": "module",
+  "main": "server.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "init": "^0.1.2",
+    "inti": "^0.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.0",
+    "path": "^0.12.7",
+    "pg": "^8.11.3",
+    "server": "^1.0.39",
+    "socket.io": "^4.7.5"
+  },
+  "name": "chat_app",
+  "version": "1.0.0",
+  "scripts": {
+   "dev": "nodemon backend/server.js",
+		"start": "nodemon backend/server.js",
+		"build": "npm install --legacy--peer--deps && npm install  --legacy--peer--deps  --prefix frontend && npm run build --prefix frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
