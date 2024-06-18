@@ -19,6 +19,7 @@
   "name": "chat_app",
   "version": "1.0.0",
   "scripts": {
+   "start": "node backend/server.js",
    "dev": "nodemon backend/server.js",
 		"build": "npm install --legacy--peer--deps && npm install  --legacy--peer--deps  --prefix frontend && npm run build --prefix frontend"
   },
