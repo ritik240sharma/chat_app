@@ -14,7 +14,7 @@ try{
 catch(error)
 {
    console.log("error in group controller",error.message)
-   // res.json({error:error.message})
+   res.json({error:error.message})
 }
 }
 
@@ -30,7 +30,7 @@ async function getGroupInfo(req,res)
    catch(error)
    {
       console.log("error in groupController.js",error.message);
-      // res.json({error:error.message});
+      res.json({error:error.message});
    }
 }
 
@@ -46,7 +46,7 @@ async function getGroupMessage(req,res)
    }
    catch(error)
    {
-      // console.log("error in getgroupmessage",error.message)
+      console.log("error in getgroupmessage",error.message)
       res.json({error:error.message})
    }
 }

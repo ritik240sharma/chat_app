@@ -21,7 +21,7 @@ function Signup() {
   async function HandleChange(e) {
     e.preventDefault();
     const data = await useSignup(user);
-
+    console.log(data)
     if(data.error)
     {
       Setuser(initial)

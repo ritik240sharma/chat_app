@@ -34,6 +34,7 @@ function logout(req, res) {
 }
 
 async function signup(req, res) {
+  console.log(req.body)
   try {
     const { fullname, username, password, confirmpassword, email, gender } =
       req.body;
@@ -54,12 +55,19 @@ async function signup(req, res) {
         else photo = "https://avatar.iran.liara.run/public/76";
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+        try{
         const s = await db.query(
-          "insert into signup values($1,$2,$3,$4,$5,$6) returning *",
+          "insert into signup (fullname,username,password,email,gender,picurl)values($1,$2,$3,$4,$5,$6) returning *",
           [fullname, username, hashedPassword, email, gender, "43"]
         );
          generateTokenandSetcookie(s.rows[0].id, res);
         return res.json(s.rows[0]);
+      }
+      catch(e)
+      {
+        console.log("sdfsf",e.message)
+        res.json({error:e.message})
+      }
       } catch (e) {
         console.log(e);
         return res.json(e.message);
