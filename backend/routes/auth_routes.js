@@ -1,6 +1,5 @@
 import express from "express";
 import { login, logout,signup } from "../controller/auth_controller.js";
-import generateTokenandSetcookie from "../utils/generateCookie.js";
 const router=express.Router();
 
 router.post("/login",login)

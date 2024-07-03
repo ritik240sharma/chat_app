@@ -22,7 +22,7 @@ function Signup() {
     e.preventDefault();
     const data = await useSignup(user);
     console.log(data)
-    if(data.error)
+    if(data?.error)
     {
       Setuser(initial)
       toast.error(data.error)

@@ -9,8 +9,9 @@ export default defineConfig({
     proxy:{
     "/api":{
        target:"https://natte.onrender.com"
-      }
+      // target:"http://localhost:4000",
     }
+  }
   },
 css: {
   postcss: './postcss.config.js',

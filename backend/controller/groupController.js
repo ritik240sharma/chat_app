@@ -21,6 +21,7 @@ catch(error)
 async function getGroupInfo(req,res)
 {
    const x=req.params.id;
+   if(!x)return ;
    try
    {
     const response=await db.query("select group_d.id as id ,name,admin_id,member_id,fullname from group_d,signup where group_d.admin_id=signup.id and ($1=ANY(member_id) or admin_id=$1)",[x]);
@@ -38,7 +39,8 @@ async function getGroupMessage(req,res)
 {
    
    const id=req.params.id;
-   console.log(id)
+   console.log("getGroupMessage.js backend ",id)
+   if(!id)return null;
    try
    {
       const query=await db.query("select * from group_messages where group_id=$1",[id]);

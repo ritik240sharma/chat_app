@@ -1,5 +1,8 @@
 import jwt  from "jsonwebtoken";
 import { db } from "../database/db.js";
+import dotenv from 'dotenv'
+dotenv.config();
+
 async function protect_route(req,res,next){
     try{
           const token=await req.cookies.jwt;
@@ -8,7 +11,7 @@ async function protect_route(req,res,next){
             return res.status(401).json({error:"Token not found "})
           }
 
-          const decoded=jwt.verify(token,"fHQEBW+mT5mbFN1HNFLKQ7rh3PknNGm1685ijXoRZr8=")
+          const decoded=jwt.verify(token,process.env.SECRET)
 
           if(!decoded){
             return res.status(401).json({error:"invalid token "})

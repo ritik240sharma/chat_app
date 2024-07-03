@@ -12,7 +12,7 @@ async function useSignup(user) {
       credentials:'include'
     });
     const data = await response.json();
-    if (data.error) return data;
+    if (data?.error) return data;
     else return data;
   } catch (error) {
     toast.error(error.message);

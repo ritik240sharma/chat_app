@@ -9,6 +9,7 @@ import users_route from "./routes/users_route.js";
 import cors from "cors"
 import { app, server } from "./socket/socket.js";
 import group_route from "./routes/group_route.js";
+import { ai_response } from './routes/ai_response.js';
 
 dotenv.config();
 const option={
@@ -25,16 +26,15 @@ app.use("/api/auth",router)
 app.use("/api/message",router2)
 app.use("/api/user",users_route)
 app.use("/api/group",group_route)
+app.use("/api/prompt",ai_response)
 
+const port=process.env.PORT;
 const __dirname=path.resolve();
 app.use(express.static(path.join(__dirname,"/frontend/dist")))
-const port=process.env.PORT;
-
 
 app.get("*",(req,res)=>{
     res.sendFile(path.join(__dirname,"frontend","dist","index.html"))
 })
-
 
 if(connection())
 {

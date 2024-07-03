@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
-const secret="fHQEBW+mT5mbFN1HNFLKQ7rh3PknNGm1685ijXoRZr8=";  //////envv
+import dotenv from "dotenv"
+dotenv.config();
+
+const secret=process.env.SECRET;  //////envv
 function generateTokenandSetcookie(userId,res){
   const token=jwt.sign({userId},secret,{expiresIn:"15d"})
 
