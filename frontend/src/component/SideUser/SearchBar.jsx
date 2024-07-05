@@ -26,6 +26,7 @@ import { BiLogOut } from "react-icons/bi";
     
     async function HandleChange()
      {   
+        localStorage.removeItem('chat-user')
         const response=await fetch("/api/auth/logout",{
         method:"POST",
         headers: 
